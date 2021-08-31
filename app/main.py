@@ -24,6 +24,9 @@ play_themes = {"grey": 'playGame.html', "donda": 'donda_playGame.html'}
 @app.route("/")
 @app.route("/<chosen_theme>")
 def index(chosen_theme=None):
+    if 'theme' not in session:
+        session['theme'] = 'grey'
+
     if chosen_theme is not None and chosen_theme in index_themes and 'theme' in session:
         session['theme'] = chosen_theme
 
@@ -150,7 +153,17 @@ def ajax_playGame():
                            incorrects=model.get_incorrect())
 
 
+@app.route("/escape")
+def escape():
+    model = data.get('model', None)
+
+    if model is None:
+        return redirect(url_for('index'))
+    return render_template("board.html", flag=True, board=model.get_board(),
+                           original=model.original,
+                           incorrects=model.get_incorrect())
+
+
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0", port=80, debug=True)
-    serve(app, host="0.0.0.0", port=80)
-    session['theme'] = "grey"
+    app.run(host="0.0.0.0", port=8080, debug=True)
+    # serve(app, host="0.0.0.0", port=80)

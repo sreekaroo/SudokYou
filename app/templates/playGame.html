@@ -32,14 +32,16 @@
 				{% endif %}
 				{%if flag and i == row and j == col and original[i][j] == 0 %}
 				<div class="{{class}} w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 border border-gray-700 border-collapse bg-green-300  flex flex-col justify-center">
-					<form class="flex justify-center " action="{{url_for('play_game', row = row, col = col)}}"
+					<form autofocus class="flex justify-center " action="{{url_for('play_game', row = row, col = col)}}"
 						  method=post>
 						{%set value = board[row][col] %}
 						{%if value == 0 %}
 						{%set value = 1 %}
 						{%endif%}
-						<input id = "fillcellinput" class="lg:font-sans text-base md:text-lg lg:text-xl font-mono flex text-center bg-green-300 border-0 focus:outline-none"
-							   type=number name=val value={{value}} min="1" max="9">
+						<input autofocus
+							   class="lg:font-sans text-base md:text-lg lg:text-xl font-mono flex text-center bg-green-300 border-0 focus:outline-none"
+							   id="fillcellinput"
+							   max="9" min="1" name=val type=number placeholder="{{value}}">
 					</form>
 				</div>
 				{%else%}
@@ -66,7 +68,7 @@
 			<div id="solve button" class="">
 				<a class="display:block" href="{{url_for('solve')}}">
 					<button name=solve
-							class="py-3 px-6 text-white rounded-lg bg-green-300 shadow-lg block md:inline-block">
+							class="py-3 px-6 text-white rounded-lg bg-green-300 shadow-lg block md:inline-block hover:bg-green-400">
 						solve
 					</button>
 				</a>
@@ -91,7 +93,7 @@
 			<div id="reset button" class="">
 				<a class="display:block" href="{{url_for('reset')}}">
 					<button name=reset
-							class="py-3 px-6 text-white rounded-lg bg-red-500 shadow-lg block md:inline-block">
+							class="py-3 px-6 text-white rounded-lg bg-red-500 shadow-lg block md:inline-block hover:bg-red-600">
 						reset
 					</button>
 				</a>
@@ -109,13 +111,19 @@
     $(document).ready(function () {
         $("a.cell").click(function () {
             var location = $(this).attr('id')
-			// document.write(location)
+            // document.write(location)
             $.ajax({
                 url: "/ajax_playGame",
                 type: "get",
                 data: {jsdata: location},
                 success: function (response) {
                     $("#board").html(response)
+                    $("#fillcellinput").focus()
+                    $(document).on('keyup', function (e) {
+                        if (e.key === "Escape") {
+                            $('.cancel').click();
+                        }
+                    });
                 }
             });
             event.preventDefault()

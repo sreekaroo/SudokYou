@@ -39,9 +39,10 @@
 				{%if value == 0 %}
 				{%set value = 1 %}
 				{%endif%}
-				<input id="fillcellinput"
+				<input autofocus
 					   class="lg:font-sans text-base md:text-lg lg:text-xl font-mono flex text-center bg-green-300 border-0 focus:outline-none"
-					   type=number name=val value={{value}} min="1" max="9">
+					   id="fillcellinput"
+					   max="9" min="1" name=val type=number placeholder="{{value}}">
 			</form>
 		</div>
 		{%else%}
@@ -68,14 +69,15 @@
 <script>
     $(document).ready(function () {
         $("a.cell").click(function () {
-
             var location = $(this).attr('id')
+
             $.ajax({
                 url: "/ajax_playGame",
                 type: "get",
                 data: {jsdata: location},
                 success: function (response) {
                     $("#board").html(response)
+                    $("#fillcellinput").focus()
                 }
             });
             event.preventDefault()
@@ -86,6 +88,8 @@
     $(document).ready(function () {
         $('form').on('submit', function (event) {
             var value = $('#fillcellinput').val()
+
+
             // document.write(value)
             $.ajax({
                 url: "/ajax_playGame",
@@ -102,6 +106,20 @@
             event.preventDefault()
             // document.write("LOL")
         });
+    });
+
+    $(document).on('keydown', function (e) {
+        if (e.key === "Escape") {
+            $.ajax({
+                url: "/escape",
+                type: "GET",
+                data: {
+                },
+                success: function (response) {
+                    $("#board").html(response)
+                }
+            });
+        }
     });
 
 </script>
