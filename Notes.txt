@@ -1,0 +1,50 @@
+Minimum viable product for sudoku
+
+    given a matrix that represents a game of sudoku, solve the given game by filling in blank tiles
+    randomly generate a solveable game of sudoku
+    allow user to play game of sudoku and check whether correct at end
+
+
+
+MVC idea:
+    model - represents sudoku board game state and operations allowed for game
+        OPERATIONS
+            solve() solves the sudoku board
+            fill(x, y , number) fills a given cell according to coordinates provided with givne number
+            delete(x,y) removes the number from a cell according to coordinates
+            get_tile_val(x,y) returns the value from a specified tile
+    controller - controls sequence of events according to user input by querying model and relaying data to view
+
+
+
+CHANGES AFTER 6 Days
+
+    model - represents a sudoku board game state or a collection of useful methods for sudoku
+        OPERATIONS:
+            solve(self, original) takes in a board and solves it,
+                returning the solved board and True or False depending on whether the board was solvable
+
+
+
+
+
+
+
+ROHAN SUGGESTIONS:
+
+    ids should never have spaces
+    use target blank for a tags
+    keep iconography more consistent
+    change github icon to match other size
+    Start from mobile to make it responsive
+    big screens move buttons to side
+    start cell form at 1
+    hover effect for all buttons: solve and reset
+    look at how to do ajax call
+    jquery and javascript engine, include in base
+    ajax call back to
+    make bolded cells not clickable
+
+
+
+

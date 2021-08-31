@@ -1,0 +1,27 @@
+{
+  "name": "Sudoku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "model/test"
+  },
+  "scripts": {
+    "build-css": "node_modules/.bin/tailwindcss build app/static/src/style.css -o app/static/public/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sreekaroo/Sudoku.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sreekaroo/Sudoku/issues"
+  },
+  "homepage": "https://github.com/sreekaroo/Sudoku#readme",
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "tailwindcss": "^2.2.7"
+  }
+}
