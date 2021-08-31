@@ -200,7 +200,7 @@ class SudokuModel:
     @staticmethod
     def generate_sudoku_board(difficulty):
         # mapping of difficulty level and number of initial empties to start with for sudoku board
-        difficulties = {"easy": 11, "medium": 25, "hard": 50}
+        difficulties = {"easy": 16, "medium": 35, "hard": 45}
 
         # making empty board
         empty_board = [[0] * 9] * 9
