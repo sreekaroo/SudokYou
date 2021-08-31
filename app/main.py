@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, jsonify
 from flask import request
-from flask_util_js import FlaskUtilJs
 
 from SudokuModel import SudokuModel
 from utils import string_to_grid
@@ -152,6 +151,6 @@ def ajax_playGame():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    # app.run(host="0.0.0.0", port=80, debug=True)
+    serve(app, host="0.0.0.0", port=80)
     session['theme'] = "grey"
-# serve(app, host="0.0.0.0", port=8080)
