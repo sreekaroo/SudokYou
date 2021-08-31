@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{%block title %} Index {% endblock %}
+
+{% set text_color = "text-gray-800" %}
+
+{% block content %}
+
+
+<div id="main content container" class="flex-row place-content-start md:place-content-center">
+
+	<div id = "layout" class = "place-items-center flex flex-col">
+
+		<div id="title" class=" p-4 col-span-2 flex-row flex">
+			<h1 class="justify-start font-serif text-3xl md:text-5xl {{text_color}}">
+				This is The <em>SudokU</em>
+			</h1>
+			<h3 class="py-6 px-6 {{text_color}} font-serif"> Built by Srikar Ananthoju</h3>
+			<div class="inline">
+				<!--				<img src="static/kanye_donda.jpeg" class="filter grayscale rounded"/>-->
+
+				<!--<img src="static/kanye_float.jpeg" width="311" height="400" class="filter grayscale rounded"/>-->
+
+			</div>
+
+		</div>
+
+		<div id=" gen_container" class="grid cols-2 place-items-center ">
+			<div class="place-items-center p-4">
+				<div class="relative sm:w-60 w-45 ">
+					<select name="difficulty" form="makeboard"
+							class="w-45 h-10 sm:h-14 sm:w-60 sm:text-2xl rounded border-2 border-gray-700 {{text_color}} font-serif block appearance-none w-full bg-white
+						 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+						<option>easy</option>
+						<option>medium</option>
+						<option>hard</option>
+					</select>
+					<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+						<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+							<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+						</svg>
+					</div>
+				</div>
+				<div id="generate board" class=" ">
+					<form id="makeboard" action="{{url_for('make_board')}}" method="post"
+						  class="">
+						<input class=" my-2 h-10 w-45 sm:h-14 sm:w-60 bg-gray-600 text-white font-serif sm:text-2xl rounded hover:bg-gray-900 "
+							   type="submit" value="Generate"/>
+					</form>
+
+				</div>
+			</div>
+
+			<div id="upload board" class="place-items-center col-start-2 p-4">
+				<form action="{{url_for('upload_board')}}" method="post" class="flex-col flex">
+					<input name="input_board" type="text" maxlength="81" placeholder="enter board...."
+						   class="sm:text-2xl h-10 w-45 rounded border-2 border-gray-700 {{text_color}} font-serif sm:h-14 sm:w-60 pl-5 pr-10 bg-white hover:border-gray-900 focus:outline-none appearance-none"/>
+					<input class="my-2 h-10 w-45 sm:h-14 sm:w-60 bg-gray-600 text-white font-serif sm:text-2xl rounded hover:bg-gray-900 "
+						   type="submit"
+						   value="Upload"/>
+				</form>
+			</div>
+
+		</div>
+
+
+		<div id="about container" class=" p-4 col-span-2 justify-center">
+			<h2 class="{{text_color}} font-serif text-2xl">
+				About
+			</h2>
+
+			<p class=" {{text_color}} p-4 overflow-y-auto font-serif">
+				Hello new user, I am Srikar and welcome to SudokU: the customizable Sudoku webapp for any occasion.
+				<br>
+				Currently, the theme is simplistic grey, but customizations appear upon request. <br>
+				You may play with a random board or upload your own custom game as a list of digits, row by row. <br>
+				There is a solve feature which implements a backtracking algorithm and can solve any board. <br>
+				Feel free to shoot me an email down below for any theme requests you have!
+
+			</p>
+		</div>
+
+
+	</div>
+
+</div>
+{% endblock %}
+
+

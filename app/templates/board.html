@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="description"
+		  content="Sudoku solver">
+	<meta name="author" content="Srikar Ananthoju">
+	<link rel="stylesheet" href="{{ url_for('static', filename='public/style.css') }}">
+	<title>{% block title %} hi {% endblock %} - My Sudoku</title>
+</head>
+<body class="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-200 flex flex-col min-h-screen justify-between">
+<div id="board" class="flex items-center justify-center">
+	<div class="grid grid-cols-9 border-b-4 border-r-4 border-gray-700 border-collapse shadow-xl ">
+		{%for i in range(0,9)%}
+		{%for j in range(0,9)%}
+
+		{% set color = "bg-blue-400" %}
+		{% if session["toggled"] and incorrects|length > 0 and incorrects[0] == (i,j)%}
+		{%if original[i][j] == 0 %}
+		{% set color = "bg-red-400" %}
+		{% endif %}
+		{%set popped_val = incorrects.pop(0)%}
+		{% endif %}
+
+		{% if j % 3==0 and i % 3 ==0 %}
+		{% set class = "border-t-4 border-l-4" %}
+		{% elif j % 3 ==0 and i % 3 !=0 %}
+		{% set class = "border-l-4" %}
+		{% elif i % 3 ==0 and j % 3 !=0 %}
+		{% set class = "border-t-4" %}
+		{% else %}
+		{% set class = "" %}
+		{% endif %}
+		{%if flag and i == row and j == col and original[i][j] == 0 %}
+		<div class="{{class}} w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 border border-gray-700 border-collapse bg-green-300  flex flex-col justify-center">
+			<form class="flex justify-center ">
+				{%set value = board[row][col] %}
+				{%if value == 0 %}
+				{%set value = 1 %}
+				{%endif%}
+				<input id="fillcellinput"
+					   class="lg:font-sans text-base md:text-lg lg:text-xl font-mono flex text-center bg-green-300 border-0 focus:outline-none"
+					   type=number name=val value={{value}} min="1" max="9">
+			</form>
+		</div>
+		{%else%}
+		<a id="{{i,j}}" class="cell display: block {{class}} w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 font-sans text-base
+					md:text-lg lg:text-xl hover:bg-blue-50 border border-gray-700 border-collapse {{color}} text-center
+					flex flex-col justify-center" href="# ">
+			{%if original[i][j] != 0 %}
+			<strong>{{original[i][j]}}</strong>
+			{%elif board[i][j] == 0%}
+			&nbsp
+			{% else %}
+			{{board[i][j]}}
+			{% endif %}
+		</a>
+		{% endif %}
+
+		{%endfor %}
+
+		{%endfor %}
+	</div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("a.cell").click(function () {
+
+            var location = $(this).attr('id')
+            $.ajax({
+                url: "/ajax_playGame",
+                type: "get",
+                data: {jsdata: location},
+                success: function (response) {
+                    $("#board").html(response)
+                }
+            });
+            event.preventDefault()
+            // document.write("LOL")
+        });
+    });
+
+    $(document).ready(function () {
+        $('form').on('submit', function (event) {
+            var value = $('#fillcellinput').val()
+            // document.write(value)
+            $.ajax({
+                url: "/ajax_playGame",
+                type: "POST",
+                data: {
+                    lol: value,
+                    row: '{{row}}',
+                    col: '{{col}}'
+                },
+                success: function (response) {
+                    $("#board").html(response)
+                }
+            });
+            event.preventDefault()
+            // document.write("LOL")
+        });
+    });
+
+</script>
+</body>
+
+
+</html>

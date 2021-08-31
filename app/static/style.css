@@ -1,0 +1,116 @@
+
+th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: center;
+    padding: 20px 20px;
+    width: 100%;
+    font-size: x-large;
+    font-family: "Hiragino Kaku Gothic Pro", serif;
+
+}
+
+td:hover {
+    background-color: rgba(0, 85, 255, 0.24);
+}
+
+
+table {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    border: 4px solid black;
+    width: 100vh;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+body {
+    margin: 0;
+    background: rgba(122, 180, 231, 0.34)
+}
+
+
+.left {
+    border-left: 4px solid black;
+
+}
+
+.topLeft {
+    border-left: 4px solid black;
+    border-top: 4px solid black;
+
+}
+
+.top {
+    border-top: 4px solid black;
+}
+
+input[type = submit] {
+    font-size: x-large;
+    position: relative;
+    background: burlywood;
+    border: 5px burlywood;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 12px 20px;
+}
+
+input.fill {
+    text-align: center;
+    font-size: x-large;
+    width: fit-content;
+    height: min-content;
+    background-color: rgba(122, 180, 231, 0.34)
+    /*padding: 12px 20px;*/
+    /*box-sizing: border-box;*/
+    /*border: 2px solid red;*/
+    /*border-radius: 4px;*/
+}
+
+input[type = number].generate {
+    text-align: center;
+    font-size: x-large;
+    width: fit-content;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+#gen_board {
+    position: center;
+
+}
+
+#explanation {
+    font-size: x-large;
+    font-family: "Hiragino Kaku Gothic Pro", serif;
+    position: relative;
+}
+
+/*#fill {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 10%;*/
+/*}*/
+
+#highlight {
+    background-color: rgba(0, 85, 255, 0.24);
+}
+
+.cell {
+    text-decoration: none;
+    display: block;
+    box-sizing: border-box;
+}
+
+#square {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    background-color: #2980b9;
+}
+
+

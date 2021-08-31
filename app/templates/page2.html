@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sudoku Board</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<img src="static/Donda.jpg" alt="Infrared pedo" width="225" height="225"/>
+
+<a href="https://www.youtube.com/watch?v=q9lFaCkFN7I"> DONDA </a>
+
+
+<table>
+	{% for i in range(0,9)%}
+	<tr>
+		{% for j in range(0,9)%}
+
+		{% if j % 3==0 and i % 3 ==0 %}
+		{% set class = "topLeft" %}
+		{% elif j % 3 ==0 and i % 3 !=0 %}
+		{% set class = "left" %}
+		{% elif i % 3 ==0 and j % 3 !=0 %}
+		{% set class = "top" %}
+		{% else %}
+		{% set class = "" %}
+		{% endif %}
+
+
+		{%if i == row and j == col%}
+			{% set id = "highlight" %}
+		{%else %}
+			{%set id = "normal" %}
+		{%endif %}
+
+		<td id={{id}} class={{class}}>
+			{%if flag and i == row and j == col%}
+				<form id="fill" action="{{url_for('play_game', row = row, col = col)}}" method=post>
+					<input class = "fill" type=number name=val value={{board[row][col]}} min="0" max="9">
+				</form>
+			{%elif original[i][j] != 0 %}
+				<strong>{{original[i][j]}}</strong>
+			{%elif board[i][j] == 0 %}
+				<a class= cell href="{{url_for('play_game', row = i, col = j)}}">
+					&nbsp&nbsp
+				</a>
+			{% else %}
+				<a class = cell href="{{url_for('play_game', row = i, col = j)}}">
+					{{board[i][j]}}
+				</a>
+
+
+			{%endif %}
+
+		</td>
+
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+</body>
+</html>

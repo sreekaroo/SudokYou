@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %} Play {% endblock %}
+
+{% block content %}
+
+<div class="flex flex-col">
+
+	<div id="page_layout"
+		 class="grid grid-flow-row gap-2 place-items-center">
+		<div id="board" class="flex items-center justify-center">
+			<div class="grid grid-cols-9 border-b-4 border-r-4 border-gray-700 border-collapse shadow-xl ">
+				{%for i in range(0,9)%}
+				{%for j in range(0,9)%}
+
+				{% set color = "bg-blue-400" %}
+				{% if session["toggled"] and incorrects|length > 0 and incorrects[0] == (i,j)%}
+				{%if original[i][j] == 0 %}
+				{% set color = "bg-red-400" %}
+				{% endif %}
+				{%set popped_val = incorrects.pop(0)%}
+				{% endif %}
+
+				{% if j % 3==0 and i % 3 ==0 %}
+				{% set class = "border-t-4 border-l-4" %}
+				{% elif j % 3 ==0 and i % 3 !=0 %}
+				{% set class = "border-l-4" %}
+				{% elif i % 3 ==0 and j % 3 !=0 %}
+				{% set class = "border-t-4" %}
+				{% else %}
+				{% set class = "" %}
+				{% endif %}
+				{%if flag and i == row and j == col and original[i][j] == 0 %}
+				<div class="{{class}} w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 border border-gray-700 border-collapse bg-green-300  flex flex-col justify-center">
+					<form class="flex justify-center " action="{{url_for('play_game', row = row, col = col)}}"
+						  method=post>
+						{%set value = board[row][col] %}
+						{%if value == 0 %}
+						{%set value = 1 %}
+						{%endif%}
+						<input id = "fillcellinput" class="lg:font-sans text-base md:text-lg lg:text-xl font-mono flex text-center bg-green-300 border-0 focus:outline-none"
+							   type=number name=val value={{value}} min="1" max="9">
+					</form>
+				</div>
+				{%else%}
+				<a id="{{i,j}}" class="cell display: block {{class}} w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 font-sans text-base
+					md:text-lg lg:text-xl hover:bg-blue-50 border border-gray-700 border-collapse {{color}} text-center
+					flex flex-col justify-center" href="# ">
+					{%if original[i][j] != 0 %}
+					<strong>{{original[i][j]}}</strong>
+					{%elif board[i][j] == 0%}
+					&nbsp
+					{% else %}
+					{{board[i][j]}}
+					{% endif %}
+				</a>
+				{% endif %}
+
+				{%endfor %}
+
+				{%endfor %}
+			</div>
+
+		</div>
+		<div id="button bar" class="grid grid-cols-3 place-items-center">
+			<div id="solve button" class="">
+				<a class="display:block" href="{{url_for('solve')}}">
+					<button name=solve
+							class="py-3 px-6 text-white rounded-lg bg-green-300 shadow-lg block md:inline-block">
+						solve
+					</button>
+				</a>
+			</div>
+
+			<a class=" display:block" href="{{url_for('toggle_incorrect')}}">
+				<div class="flex justify-center items-center">
+					{%if not session["toggled"]%}
+					<div class="w-14 h-7 flex items-center bg-gray-300 rounded-full mx-3 px-1">
+						<!-- Switch -->
+						<div class="bg-white w-5 h-5 rounded-full shadow-md transform"></div>
+					</div>
+					{% else%}
+					<!-- Toggled switch container -->
+					<div class="w-14 h-7 flex items-center bg-gray-300 rounded-full mx-3 px-1 bg-blue-700">
+						<div class="bg-white w-5 h-5 rounded-full shadow-md transform translate-x-7"></div>
+					</div>
+					{% endif%}
+				</div>
+			</a>
+
+			<div id="reset button" class="">
+				<a class="display:block" href="{{url_for('reset')}}">
+					<button name=reset
+							class="py-3 px-6 text-white rounded-lg bg-red-500 shadow-lg block md:inline-block">
+						reset
+					</button>
+				</a>
+			</div>
+		</div>
+
+	</div>
+
+
+</div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("a.cell").click(function () {
+            var location = $(this).attr('id')
+			// document.write(location)
+            $.ajax({
+                url: "/ajax_playGame",
+                type: "get",
+                data: {jsdata: location},
+                success: function (response) {
+                    $("#board").html(response)
+                }
+            });
+            event.preventDefault()
+            // document.write("LOL")
+        });
+    });
+
+</script>
+{% endblock %}
+
