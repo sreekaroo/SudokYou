@@ -47,9 +47,15 @@ board6 = make_2d_list(
      4, 7, 5, 6, 1, 9, 8, 5, 6, 8, 9, 2, 1, 3, 4, 7, 4, 7, 9, 5, 1, 3, 8, 2, 6, 8, 5, 6, 4, 9, 2, 7, 1, 3, 2, 1, 3, 8,
      6, 7, 9, 5, 4])
 
+board7 = make_2d_list([4, 1, 7, 9, 3, 5, 6, 8, 2, 3, 6, 2, 4, 8, 1, 7, 5, 9, 5, 8, 9, 7, 2, 6, 3, 4, 1, 2, 4, 1, 8, 9, 7, 
+                       5, 3, 6, 7, 9, 6, 2, 5, 3, 4, 1, 8, 8, 3, 5, 6, 1, 4, 
+                       2, 9, 7, 9, 7, 3, 1, 4, 2, 8, 6, 5, 6, 5, 8, 3, 7, 9, 1, 2, 4, 1, 2, 4, 5, 6, 8, 9, 7, 3])
+
 base_boards.append(board1)
 base_boards.append(board2)
 base_boards.append(board3)
 base_boards.append(board4)
 base_boards.append(board5)
 base_boards.append(board6)
+base_boards.append(board7)
+
