@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, session, flash, jso
 from flask import request
 
 from SudokuModel import SudokuModel
+import passwords
 from utils import string_to_grid
 
 from waitress import serve
@@ -16,8 +17,9 @@ data = {}
 difficulties = {1: "easy", 2: "medium", 3: "hard"}
 
 # supported themes
-index_themes = {"grey": 'index.html', "donda": 'donda_index.html'}
-play_themes = {"grey": 'playGame.html', "donda": 'donda_playGame.html'}
+index_themes = {"grey": 'index.html', "donda": 'donda_index.html', "dianna": 'dianna_index.html'}
+play_themes = {"grey": 'playGame.html', "donda": 'donda_playGame.html', "dianna": 'dianna_playGame.html'}
+protected_themes = {"dianna": True}
 
 
 # the home page
@@ -101,12 +103,12 @@ def upload_board():
 @app.route("/play_game")
 def play_game(row=-1, col=-1):
     model = data.get('model', None)
-
-    if model is None:
+    theme = session['theme']
+    if model is None or (protected_themes.get(theme, False) and session.get("login", "") != "yes"):
         return redirect(url_for('index'))
     # initial call from index page
     if row == -1 or col == -1:
-        return render_template(play_themes.get(session['theme'], "playGame.html"), board=model.get_board(),
+        return render_template(play_themes.get(theme, "playGame.html"), board=model.get_board(),
                                original=model.original,
                                flag=False,
                                model=model, incorrects=model.get_incorrect())
@@ -116,7 +118,7 @@ def play_game(row=-1, col=-1):
 
         # for when selecting a cell
         if request.method == 'GET':
-            return render_template(play_themes.get(session['theme'], "playGame.html"), flag=True, row=row_num,
+            return render_template(play_themes.get(theme, "playGame.html"), flag=True, row=row_num,
                                    col=col_num,
                                    board=model.get_board(),
                                    original=model.original, testPage=True, incorrects=model.get_incorrect())
@@ -162,6 +164,22 @@ def escape():
     return render_template("board.html", flag=True, board=model.get_board(),
                            original=model.original,
                            incorrects=model.get_incorrect())
+
+
+@app.route("/verify<name>", methods=['GET', 'POST'])
+def verify(name=""):
+    # require passwords file, not included on github for privacy reasons
+    logins = passwords.logins
+
+    password = request.form.get('input_password')
+    if logins.get(name) == password:
+        session["login"] = "yes"
+        data['model'] = SudokuModel()
+        # return render_template('dianna_playGame.html')
+        return redirect(url_for('play_game'))
+    else:
+        session["login"] = "no"
+        return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
