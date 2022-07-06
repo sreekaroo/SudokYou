@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, jsonify
 from flask import request
 
-from SudokuModel import SudokuModel
+from app.SudokuModel import SudokuModel
 import passwords
 from utils import string_to_grid
 
@@ -183,5 +183,5 @@ def verify(name=""):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
-    # serve(app, host="0.0.0.0", port=80)
+    # app.run(host="0.0.0.0", port=8080, debug=True)
+    serve(app, host="0.0.0.0", port=80)

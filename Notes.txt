@@ -40,10 +40,7 @@ ROHAN SUGGESTIONS:
     big screens move buttons to side
     start cell form at 1
     hover effect for all buttons: solve and reset
-    look at how to do ajax call
-    jquery and javascript engine, include in base
-    ajax call back to
-    make bolded cells not clickable
+
 
 
 
