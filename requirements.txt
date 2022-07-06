@@ -11,3 +11,4 @@ six==1.16.0
 waitress==2.0.0
 webassets==2.0
 Werkzeug==2.0.1
+gunicorn==20.0.4

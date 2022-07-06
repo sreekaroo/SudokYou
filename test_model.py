@@ -3,11 +3,11 @@ import unittest
 
 import numpy as np
 
-from app import Seeds
-from app.SudokuModel import SudokuModel
+import Seeds
+from SudokuModel import SudokuModel
 
 # tests and examples for sudoku model class
-from app.utils import make_2d_list, copy_2d_arr, string_to_grid
+from utils import make_2d_list, copy_2d_arr, string_to_grid
 
 
 class TestSudokuModel(unittest.TestCase):

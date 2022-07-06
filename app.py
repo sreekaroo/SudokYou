@@ -1,11 +1,9 @@
-from flask import Flask, render_template, url_for, redirect, session, flash, jsonify
+from flask import Flask, render_template, url_for, redirect, session, flash
 from flask import request
 
-from app.SudokuModel import SudokuModel
+from SudokuModel import SudokuModel
 import passwords
 from utils import string_to_grid
-
-from waitress import serve
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -182,6 +180,6 @@ def verify(name=""):
         return redirect(url_for('index'))
 
 
-if __name__ == "__main__":
-    # app.run(host="0.0.0.0", port=8080, debug=True)
-    serve(app, host="0.0.0.0", port=80)
+# if __name__ == "__main__":
+#     # app.run(host="0.0.0.0", port=8080, debug=True)
+#     serve(app, host="0.0.0.0", port=80)
